@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - network
+
+  api:
+   build: .
+   environment:
+    FLASK_APP: api.py
+    FLASK_ENV: development
+   ports:
+   - "5050:5000"
+   depends_on:
+   - db
+   networks:
+   - network
+
+networks:
+ network:
+  driver: bridge
