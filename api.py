@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, render_template, redirect, url_for, flash
+from flask import Flask, request, render_template, redirect, url_for
 import mysql.connector
 from dotenv import load_dotenv
 import os
@@ -42,7 +42,7 @@ def login_data_compre():
         db_pass=user[2]
         if db_pass == password:
             print("loged in")
-            return redirect(url_for('login_page')) # next template
+            return redirect(url_for('homepage'))
         else:
             print("wrong password")
             return redirect(url_for('login_page'))
@@ -50,9 +50,9 @@ def login_data_compre():
         print("user not found")
         return redirect(url_for('login_page'))
 
-@app.route('/welocome')
-def welcome():
-    return render_template("qwe.html")
+@app.route('/homepage')
+def homepage():
+    return render_template("homepage.html")
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5050, debug=True)
